@@ -6,6 +6,10 @@ build:
 test:
 	dotnet test
 
+.PHONY: clean
+clean:
+	find . -name 'bin' -or -name 'obj' | xargs rm -rf
+
 .PHONY: benchmark
 benchmark:
 	dotnet run --configuration Release --project src/Benchmark
