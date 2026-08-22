@@ -1,4 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--
+LibCnpj, a simple library for validating Brazil's CNPJ.
+Copyright (C) 2026 Daniel Augusto
+SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
+!-->
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <RootNamespace>LibCnpj.Test</RootNamespace>
@@ -19,6 +24,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Library.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 .vscode/
+Benchmark*/
 bin/
 obj/
 TODO
