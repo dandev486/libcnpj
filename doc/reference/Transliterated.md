@@ -1,4 +1,4 @@
-﻿# Transliterated
+﻿# CnpjValidator (Transliterated)
 
 A simple transliteration of the [reference implementation][1] from Java to C#, while keeping it as close to the original
 implementation as possible and that was subject to the same testing as the released one.
@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace LibCnpj;
 
-public class TransliteratedCnpjValidator
+public class CnpjValidator
 {
     private readonly int _lengthWithoutDV = 12;
     private readonly Regex _separators = new("[./-]");
