@@ -1,19 +1,16 @@
-name: test
+name: build
 on: [push]
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [ '10.0.x', '8.0.x' ]
     steps:
       - name: checkout
         uses: actions/checkout@v6
 
-      - name: setup dotnet ${{ matrix.dotnet-version }}
+      - name: setup dotnet
         uses: actions/setup-dotnet@v6
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '10.0.x'
 
       - name: restore
         run: dotnet restore

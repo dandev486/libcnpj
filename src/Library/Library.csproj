@@ -13,4 +13,29 @@ SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>libcnpj</PackageId>
+    <PackageVersion>0.1.0</PackageVersion>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/dandev486/libcnpj/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dandev486/libcnpj/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Authors>Daniel Augusto</Authors>
+    <Company>dandev486</Company>
+    <PackageTags>libcnpj</PackageTags>
+    <Description>
+      LibCnpj, a simple library for validating Brazil's CNPJ.
+    </Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\LICENSE" Pack="true" PackagePath="">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\README.md" Pack="true" PackagePath="">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
