@@ -21,7 +21,7 @@ Below a suggestion on how to use this library for a project that uses dependency
 1. **Configure and Register**, using your favourite validation rule (or most often, the proper business rule).
 
 ```csharp
-// Example 1: When only alphanumeric validations are needed, register once.
+// Example 1: When only alphanumeric validations are needed, registered once.
 public static class MyServices
 {
     private static void AddMyServices(IServiceCollection services)
@@ -30,7 +30,7 @@ public static class MyServices
     }
 }
 
-// Example 2: When both alphanumeric and numeric validations are needed, register as different keyed services.
+// Example 2: When both alphanumeric and numeric validations are needed, registered as different keyed services.
 public static class MyServices
 {
     private static void AddMyServices(IServiceCollection services)
@@ -46,10 +46,10 @@ public static class MyServices
 }
 ```
 
-2. **Use**,
+2. **Use**, injecting it where appropriate.
 
 ```csharp
-// Example 1: When only alphanumeric validations are needed, register once.
+// Example 1: When only alphanumeric validations are needed, registered once.
 public class MyClass(
     ICnpjValidator cnpjValidator)
 {
@@ -64,7 +64,7 @@ public class MyClass(
     }
 }
 
-// Example 2: When both alphanumeric and numeric validations are needed, register as different keyed services.
+// Example 2: When both alphanumeric and numeric validations are needed, registered as different keyed services.
 public class MyClass(
     [FromKeyedServices(CnpjValidationFormat.Alphanumeric)] ICnpjValidator alphanumericCnpjValidator,
     [FromKeyedServices(CnpjValidationFormat.Numeric)] ICnpjValidator numericCnpjValidator))
