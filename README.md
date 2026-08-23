@@ -106,11 +106,11 @@ Even though nobody asked (as of now), I strongly suggest that you don't even was
 
   I thought that it would be nice both if it was possible to ensure that the separators themselves are also valid and if
   one could avoid these allocations prior to even knowing that the document is valid since when working with systems
-  that receives lots of information, this makes a difference. Then implemented in another way, measured both
+  that receive lots of information, this makes a difference. Then implemented in another way, measured both
   implementations and was satisfied enough with the results to publish it, maybe somehow it will be someday useful to
   someone, somewhere.
 
-  So basically scracthing a personal itch.
+  So basically scratching a personal itch.
 
 **Q:** Why did you compare character ranges directly instead of using functions from `System.Char`? \
 **A:** While experimenting with the transliteration, I noticed that some functions that I would have to implement such
@@ -119,7 +119,7 @@ Even though nobody asked (as of now), I strongly suggest that you don't even was
   strings are UTF-16, ASCII overlaps with it, and ASCII is all that is accepted in a CNPJ), checking by range seems
   reasonable instead of the more general purpose implementation provided there.
 
-  So basically scracthing another personal itch (found a bug? report it!).
+  So basically scratching another personal itch (found a bug? report it!).
 
 [1]: https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj
 [2]: https://github.com/dotnet/dotnet/blob/b0f34d51fccc69fd334253924abd8d6853fad7aa/src/runtime/src/libraries/System.Private.CoreLib/src/System/Char.cs#L301C52-L301C74
