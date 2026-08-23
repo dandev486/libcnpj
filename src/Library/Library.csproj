@@ -11,6 +11,11 @@ SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <PackageId>libcnpj</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Daniel Augusto</Authors>
+    <Company>dandev486</Company>
   </PropertyGroup>
 
 </Project>
