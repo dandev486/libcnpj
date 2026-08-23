@@ -1,0 +1,36 @@
+name: pack
+on:
+  push:
+    branches:
+      - master
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '10.0.x', '8.0.x' ]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v6
+
+      - name: setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: restore
+        run: dotnet restore
+
+      - name: build
+        run: dotnet build --no-restore --configuration Release
+
+      - name: pack
+        run: dotnet pack --no-build --configuration Release
+
+      - name: push
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        run: >
+          dotnet nuget push ./src/Library/bin/Release/*.nupkg \
+            --api-key $NUGET_KEY \
+            --source https://api.nuget.org/v3/index.json \
