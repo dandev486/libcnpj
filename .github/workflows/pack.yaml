@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - '**' # WORKFLOW VALIDATION
 jobs:
   pack:
     runs-on: ubuntu-latest
@@ -20,10 +19,16 @@ jobs:
         run: dotnet restore
 
       - name: build
-        run: dotnet build --no-restore --configuration Release
+        run: >
+          dotnet build \
+            --no-restore \
+            --configuration Release
 
       - name: pack
-        run: dotnet pack --no-build --configuration Release
+        run: >
+          dotnet pack \
+            --no-build \
+            --configuration Release
 
       - name: push
         env:
