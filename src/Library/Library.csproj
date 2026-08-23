@@ -13,7 +13,7 @@ SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <PackageId>libcnpj</PackageId>
-    <Version>0.1.0-beta2</Version>
+    <Version>0.1.0-beta3</Version>
     <Authors>Daniel Augusto</Authors>
     <Company>dandev486</Company>
   </PropertyGroup>
