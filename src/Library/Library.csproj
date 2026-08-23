@@ -11,11 +11,27 @@ SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
 
+  <PropertyGroup>
     <PackageId>libcnpj</PackageId>
-    <Version>0.1.0-beta3</Version>
+    <PackageVersion>0.1.0-beta4</PackageVersion>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Authors>Daniel Augusto</Authors>
     <Company>dandev486</Company>
+    <PackageTags>libcnpj</PackageTags>
+    <Description>
+      LibCnpj, a simple library for validating Brazil's CNPJ.
+    </Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\LICENSE" Pack="true" PackagePath="">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\README" Pack="true" PackagePath="">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>
