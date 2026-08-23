@@ -6,6 +6,10 @@ build:
 test:
 	dotnet test
 
+.PHONY: pack
+pack:
+	dotnet pack
+
 .PHONY: clean
 clean:
 	find . -name 'bin' -or -name 'obj' | xargs rm -rf
