@@ -99,7 +99,7 @@ Even though nobody asked (as of now), I strongly suggest that you don't even was
 **A:** I am working on another project and validating documents will be necessary, so why not.
 
 **Q:** Why did you implement it the way you did? \
-**A:** I transliterated the [reference implementation][1] from Java to C# and, on doing that, noticed that it doesn't
+**A:** I [transliterated][1] the [reference implementation][2] from Java to C# and, on doing that, noticed that it doesn't
   allow validating documents with separators, which would result in an allocation for their removal for validation and
   then, noticed that it doesn't allow validating documents whose alphabetic characters are lowercase, which would result
   in an allocation for their conversion.
@@ -121,5 +121,6 @@ Even though nobody asked (as of now), I strongly suggest that you don't even was
 
   So basically scratching another personal itch (found a bug? report it!).
 
-[1]: https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj
-[2]: https://github.com/dotnet/dotnet/blob/b0f34d51fccc69fd334253924abd8d6853fad7aa/src/runtime/src/libraries/System.Private.CoreLib/src/System/Char.cs#L301C52-L301C74
+[1]: https://github.com/dandev486/libcnpj/blob/master/doc/reference/Transliterated.md
+[2]: https://www.gov.br/receitafederal/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos/cnpj
+[3]: https://github.com/dotnet/dotnet/blob/b0f34d51fccc69fd334253924abd8d6853fad7aa/src/runtime/src/libraries/System.Private.CoreLib/src/System/Char.cs#L301C52-L301C74
