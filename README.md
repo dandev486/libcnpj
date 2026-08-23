@@ -116,7 +116,7 @@ Even though nobody asked (as of now), I strongly suggest that you don't even was
 **A:** While experimenting with the transliteration, I noticed that some functions that I would have to implement such
   as `IsDot` were considerably faster when invoked in comparison and decided to explore the [source code][2]. There are
   are additional calls involved reusing `IsBetween`, so I took a bet on skipping them, since in C# characters and
-  strings are UTF-16, ASCII overlaps with it, and ASCII is all that is accepted in a CNPJ), checking by range seems
+  strings are UTF-16, ASCII overlaps with it, and ASCII is all that is accepted in a CNPJ, checking by range seems
   reasonable instead of the more general purpose implementation provided there.
 
   So basically scratching another personal itch (found a bug? report it!).
