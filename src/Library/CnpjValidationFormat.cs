@@ -12,22 +12,25 @@ public enum CnpjValidationFormat
 {
     /// <summary>
     /// CNPJ is composed of characters ranging from 0-9 and A-Z.
+    /// <para>
+    /// This is the newer official validation rule.
+    /// </para>
     /// </summary>
     Alphanumeric = 1,
 
     /// <summary>
     /// CNPJ is composed of characters ranging from 0-9, A-Z and a-z.
-    ///
     /// <para>
-    /// This is not the official validation rule and is provided as a convenience in order to avoid unnecessary string
-    /// allocations with case conversions prior to knowing if a document is even valid (aka.: when using this mode, you
-    /// should first validate and then only convert it later when valid).
+    /// This is the newer non-official validation rule.
     /// </para>
     /// </summary>
     AlphanumericRelaxed = 2,
 
     /// <summary>
     /// CNPJ is composed of characters ranging from 0-9.
+    /// <para>
+    /// This is the older official validation rule.
+    /// </para>
     /// </summary>
     Numeric = 3,
 }
