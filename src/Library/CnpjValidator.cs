@@ -16,7 +16,7 @@ public interface ICnpjValidator
 public class CnpjValidator : ICnpjValidator
 {
     private readonly int _length;
-    private readonly CnpjCharacter[] _characters;
+    private readonly CnpjValidatorCharacter[] _characters;
 
     public CnpjValidator(CnpjFormat format, bool withSeparators = true)
     {
@@ -140,4 +140,4 @@ public class CnpjValidator : ICnpjValidator
         c == '/';
 }
 
-internal record struct CnpjCharacter(int W1, int W2, Func<char, bool> IsValid);
+internal record struct CnpjValidatorCharacter(int W1, int W2, Func<char, bool> IsValid);
