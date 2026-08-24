@@ -19,13 +19,13 @@ public class CnpjValidator : ICnpjValidator
     private readonly int _length;
     private readonly CnpjCharacter[] _characters;
 
-    public CnpjValidator(CnpjValidationFormat format, bool withSeparators = true)
+    public CnpjValidator(CnpjFormat format, bool withSeparators = true)
     {
         Func<char, bool> isValue = format switch
         {
-            CnpjValidationFormat.Alphanumeric => IsAlphanumeric,
-            CnpjValidationFormat.AlphanumericRelaxed => IsAlphanumericRelaxed,
-            CnpjValidationFormat.Numeric => IsNumeric,
+            CnpjFormat.Alphanumeric => IsAlphanumeric,
+            CnpjFormat.AlphanumericRelaxed => IsAlphanumericRelaxed,
+            CnpjFormat.Numeric => IsNumeric,
             _ => throw new NotImplementedException(),
         };
 

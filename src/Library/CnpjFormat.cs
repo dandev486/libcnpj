@@ -6,9 +6,9 @@ SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
 namespace LibCnpj;
 
 /// <summary>
-/// CnpjValidationFormat.
+/// CnpjFormat.
 /// </summary>
-public enum CnpjValidationFormat
+public enum CnpjFormat
 {
     /// <summary>
     /// CNPJ is composed of characters ranging from 0-9 and A-Z.

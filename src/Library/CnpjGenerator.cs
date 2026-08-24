@@ -12,7 +12,7 @@ public interface ICnpjGenerator
 
 public class CnpjGenerator : ICnpjGenerator
 {
-    public CnpjGenerator(CnpjValidationFormat format, bool withSeparators = true)
+    public CnpjGenerator(CnpjFormat format, bool withSeparators = true)
     {
     }
 

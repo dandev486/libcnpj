@@ -26,7 +26,7 @@ public static class MyServices
 {
     private static void AddMyServices(IServiceCollection services)
     {
-        services.AddSingleton<ICnpjValidator>(new CnpjValidator(CnpjValidationFormat.Alphanumeric));
+        services.AddSingleton<ICnpjValidator>(new CnpjValidator(CnpjFormat.Alphanumeric));
     }
 }
 
@@ -36,12 +36,12 @@ public static class MyServices
     private static void AddMyServices(IServiceCollection services)
     {
         services.AddKeyedSingleton<ICnpjValidator>(
-            CnpjValidationFormat.Alphanumeric,
-            new CnpjValidator(CnpjValidationFormat.Alphanumeric));
+            CnpjFormat.Alphanumeric,
+            new CnpjValidator(CnpjFormat.Alphanumeric));
 
         services.AddKeyedSingleton<ICnpjValidator>(
-            CnpjValidationFormat.Numeric,
-            new CnpjValidator(CnpjValidationFormat.Numeric));
+            CnpjFormat.Numeric,
+            new CnpjValidator(CnpjFormat.Numeric));
     }
 }
 ```
@@ -66,8 +66,8 @@ public class MyClass(
 
 // Example 2: When both alphanumeric and numeric validations are needed, registered as different keyed services.
 public class MyClass(
-    [FromKeyedServices(CnpjValidationFormat.Alphanumeric)] ICnpjValidator alphanumericCnpjValidator,
-    [FromKeyedServices(CnpjValidationFormat.Numeric)] ICnpjValidator numericCnpjValidator))
+    [FromKeyedServices(CnpjFormat.Alphanumeric)] ICnpjValidator alphanumericCnpjValidator,
+    [FromKeyedServices(CnpjFormat.Numeric)] ICnpjValidator numericCnpjValidator))
 {
     public void MyAlphanumericMethod(string document)
     {

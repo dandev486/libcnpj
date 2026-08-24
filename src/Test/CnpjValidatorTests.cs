@@ -28,7 +28,7 @@ public class CnpjValidatorTestsV2
     [InlineData("_40416464000106", false)] // Invalid Length (+1)
     public void Given_an_invalid_alphanumeric_cnpj_should_validate_with_failure(string value, bool withSeparators)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.Alphanumeric, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.Alphanumeric, withSeparators);
         var result = validator.IsValid(value);
         Assert.False(result);
     }
@@ -54,7 +54,7 @@ public class CnpjValidatorTestsV2
     [InlineData("_40416464000106", false)] // Invalid Length (+1)
     public void Given_an_invalid_alphanumeric_relaxed_cnpj_should_validate_with_failure(string value, bool withSeparators)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.AlphanumericRelaxed, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.AlphanumericRelaxed, withSeparators);
         var result = validator.IsValid(value);
         Assert.False(result);
     }
@@ -72,7 +72,7 @@ public class CnpjValidatorTestsV2
     [InlineData("_40416464000106", false)] // Invalid Length (+1)
     public void Given_an_invalid_numeric_cnpj_should_validate_with_failure(string value, bool withSeparators)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.Numeric, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.Numeric, withSeparators);
         var result = validator.IsValid(value);
         Assert.False(result);
     }
@@ -280,7 +280,7 @@ public class CnpjValidatorTestsV2
     [InlineData("Z37C0TN8000171", false)]
     public void Given_a_valid_alphanumeric_cnpj_should_validate_with_success(string value, bool withSeparators)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.Alphanumeric, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.Alphanumeric, withSeparators);
         var result = validator.IsValid(value);
         Assert.True(result);
     }
@@ -888,7 +888,7 @@ public class CnpjValidatorTestsV2
     [InlineData("74854763000136", false)]
     public void Given_a_valid_alphanumeric_relaxed_cnpj_should_validate_with_success(string value, bool withSeparators)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.AlphanumericRelaxed, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.AlphanumericRelaxed, withSeparators);
         var result = validator.IsValid(value);
         Assert.True(result);
     }
@@ -1096,7 +1096,7 @@ public class CnpjValidatorTestsV2
     [InlineData("74854763000136", false)]
     public void Given_a_valid_numeric_cnpj_should_validate_with_success(string value, bool withSeparators)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.Numeric, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.Numeric, withSeparators);
         var result = validator.IsValid(value);
         Assert.True(result);
     }
@@ -1124,7 +1124,7 @@ public class CnpjValidatorTestsV2
     [InlineData("_40416464000106", false, "length is invalid")] // Invalid Length (+1)
     public void Given_an_invalid_alphanumeric_cnpj_should_return_validation_errors(string value, bool withSeparators, string error)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.Alphanumeric, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.Alphanumeric, withSeparators);
         var result = validator.Validate(value);
         Assert.Single(result.Errors);
         Assert.Contains(error, result.Errors.Single());
@@ -1151,7 +1151,7 @@ public class CnpjValidatorTestsV2
     [InlineData("_40416464000106", false, "length is invalid")] // Invalid Length (+1)
     public void Given_an_invalid_alphanumeric_relaxed_cnpj_should_return_validation_errors(string value, bool withSeparators, string error)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.AlphanumericRelaxed, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.AlphanumericRelaxed, withSeparators);
         var result = validator.Validate(value);
         Assert.Single(result.Errors);
         Assert.Contains(error, result.Errors.Single());
@@ -1170,7 +1170,7 @@ public class CnpjValidatorTestsV2
     [InlineData("_40416464000106", false, "length is invalid")] // Invalid Length (+1)
     public void Given_an_invalid_numeric_cnpj_should_return_validation_errors(string value, bool withSeparators, string error)
     {
-        var validator = new CnpjValidator(CnpjValidationFormat.Numeric, withSeparators);
+        var validator = new CnpjValidator(CnpjFormat.Numeric, withSeparators);
         var result = validator.Validate(value);
         Assert.Single(result.Errors);
         Assert.Contains(error, result.Errors.Single());
