@@ -10,7 +10,7 @@ SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
     non-official) document validations, where the latter is provided as a convenience in order to avoid unnecessary
     string allocations with case conversions prior to knowing if a document is even valid (aka.: when using this mode,
     you can first validate and then, only if valid, convert the input string to uppercase).
-- **Retrocompatible**, allows performing `Numeric` document validations (older official rule).
+- **Retrocompatible**, allows performing `Numeric` document validations (older rule, official).
 - **Economy**, zero regex matching and zero string allocation during the validation process, just plain character
     comparisons and digit calculations based on their respective weights.
 
