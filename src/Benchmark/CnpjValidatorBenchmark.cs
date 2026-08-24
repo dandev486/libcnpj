@@ -54,26 +54,4 @@ public class CnpjValidatorBenchmark
     [Arguments("40416464000106")]
     public void NumericWithoutSeparator(string value) =>
         _numericWithoutSeparator.IsValid(value);
-
-    // [Benchmark]
-    // [Arguments("28.5HW.5PL/0001-12")]
-    // [Arguments("40.416.464/0001-06")]
-    // public void TransliteratedAlphanumericWithSeparator(string value) =>
-    //     _transliteratedValidator.IsValid(value);
-
-    // [Benchmark]
-    // [Arguments("285HW5PL000112")]
-    // [Arguments("40416464000106")]
-    // public void TransliteratedAlphanumericWithoutSeparator(string value) =>
-    //     _transliteratedValidator.IsValid(value);
-
-    // [Benchmark]
-    // [Arguments("40.416.464/0001-06")]
-    // public void TransliteratedNumericWithSeparator(string value) =>
-    //     _transliteratedValidator.IsValid(value);
-
-    // [Benchmark]
-    // [Arguments("40416464000106")]
-    // public void TransliteratedNumericWithoutSeparator(string value) =>
-    //     _transliteratedValidator.IsValid(value);
 }
