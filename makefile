@@ -30,5 +30,5 @@ license:
 		-not -path '*/doc*' \
 		-not -path '*/bin*' \
 		-not -path '*/obj*' \
-		-not -path 'BenchmarkDotNet*' \
+		-not -path '*/BenchmarkDotNet*' \
 		| xargs grep --files-without-match 'SPDX-License-Identifier'

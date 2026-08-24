@@ -12,8 +12,7 @@ public interface ICnpjGenerator
 
 public class CnpjGenerator : ICnpjGenerator
 {
-    // TODO: [CONSIDER] IF INJECTED AS A SINGLETON IT WILL INDEFINETELY BE PSEUDO-RANDOM
-    private readonly Random _random = new(DateTime.UtcNow.Millisecond);
+    private static readonly Random _random = new(DateTime.UtcNow.Millisecond);
     private readonly int _length;
     private readonly CnpjGeneratorCharacter[] _characters;
 
@@ -31,10 +30,10 @@ public class CnpjGenerator : ICnpjGenerator
         {
             _length = 18;
             _characters = [
-                new(5, 6, value), new(4, 5, value), new(0, 0, Dot),
-                new(3, 4, value), new(2, 3, value), new(9, 2, value), new(0, 0, Dot),
-                new(8, 9, value), new(7, 8, value), new(6, 7, value), new(0, 0, Slash),
-                new(5, 6, value), new(4, 5, value), new(3, 4, value), new(2, 3, value), new(0, 0, Dash),
+                new(5, 6, value), new(4, 5, value), new(0, 0, CnpjCharacter.Dot),
+                new(3, 4, value), new(2, 3, value), new(9, 2, value), new(0, 0, CnpjCharacter.Dot),
+                new(8, 9, value), new(7, 8, value), new(6, 7, value), new(0, 0, CnpjCharacter.Slash),
+                new(5, 6, value), new(4, 5, value), new(3, 4, value), new(2, 3, value), new(0, 0, CnpjCharacter.Dash),
                 new(0, 2, value), new(0, 0, value) ];
         }
         else
@@ -51,50 +50,35 @@ public class CnpjGenerator : ICnpjGenerator
 
     public string Generate()
     {
-        // TODO: [CONSIDER] CODE REUSE BETWEEN GENERATOR AND VALIDATOR, BUT MAKE IT WORK FIRST
-        // TODO: [RESEARCH] IS THERE ANY SPECIAL RULE FOR THE '/0001' PORTION BESIDES THAT IT ALSO ACCEPTS LETTERS?
         Span<char> value = stackalloc char[_length];
 
-        int dv1 = 0;
-        int dv2 = 0;
-        int i = 0;
-        int v = 0;
-        char c;
-
-        for (i = 0; i < _characters.Length - 2; i++)
+        var sum1 = 0;
+        var sum2 = 0;
+        for (var i = 0; i < _characters.Length - 2; i++)
         {
-            c = _characters[i].Value();
+            var c = _characters[i].Value();
             value[i] = c;
 
-            v = c - Base(c);
-            dv1 += v * _characters[i].W1;
-            dv2 += v * _characters[i].W2;
+            var v = c - CnpjCharacter.Base(c);
+            sum1 += v * _characters[i].WeightDv1;
+            sum2 += v * _characters[i].WeightDv2;
         }
 
-        dv1 = 11 - (dv1 % 11);
-        if (dv1 > 9) dv1 = 0;
+        var idv1 = _length - 2;
+        var dv1 = CnpjCharacter.ToDv(sum1);
+        value[idv1] = dv1;
 
-        c = (char)(dv1 + '0');
-        value[i] = c;
+        var vdv1 = dv1 - CnpjCharacter.Base(dv1);
+        sum2 += vdv1 * _characters[idv1].WeightDv2;
 
-        v = c - Base(c);
-        dv2 += v * _characters[i].W2;
-
-        dv2 = 11 - (dv2 % 11);
-        if (dv2 > 9) dv2 = 0;
-        value[++i] = (char)(dv2 + '0');
+        var idv2 = _length - 1;
+        var dv2 = CnpjCharacter.ToDv(sum2);
+        value[idv2] = dv2;
 
         return value.ToString();
-
-
-        static int Base(char c) =>
-            c >= 'a' && c <= 'z'
-                ? 80  // '0' + 'a' - 'A', relaxed mode.
-                : 48; // '0', strict mode.
     }
 
-    // TODO: [CONSIDER] SINGLE RANDOM CALL, BUT MAKE IT WORK FIRST
-    private char Alphanumeric() =>
+    private static char Alphanumeric() =>
         (_random.Next() % 2) switch
         {
             0 => (char)(_random.Next() % 26 + 'A'),
@@ -102,8 +86,7 @@ public class CnpjGenerator : ICnpjGenerator
             _ => throw new NotImplementedException(),
         };
 
-    // TODO: [CONSIDER] SINGLE RANDOM CALL, BUT MAKE IT WORK FIRST
-    private char AlphanumericRelaxed() =>
+    private static char AlphanumericRelaxed() =>
         (_random.Next() % 3) switch
         {
             0 => (char)(_random.Next() % 26 + 'A'),
@@ -112,14 +95,6 @@ public class CnpjGenerator : ICnpjGenerator
             _ => throw new NotImplementedException(),
         };
 
-    private char Numeric() =>
+    private static char Numeric() =>
         (char)(_random.Next() % 10 + '0');
-
-    private char Dash() => '-';
-
-    private char Dot() => '.';
-
-    private char Slash() => '/';
 }
-
-internal record struct CnpjGeneratorCharacter(int W1, int W2, Func<char> Value);
