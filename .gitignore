@@ -1,5 +1,5 @@
 .vscode/
-Benchmark*/
+BenchmarkDotNet*/
 bin/
 obj/
 TODO
