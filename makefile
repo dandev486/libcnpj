@@ -8,7 +8,7 @@ test:
 
 .PHONY: pack
 pack:
-	dotnet pack
+	dotnet pack --configuration Release
 
 .PHONY: clean
 clean:
