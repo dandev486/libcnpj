@@ -12,7 +12,11 @@ pack:
 
 .PHONY: clean
 clean:
-	find . -name 'bin' -or -name 'obj' -or -name 'BenchmarkDotNet*' | xargs rm -rf
+	find . -type d \
+		-name 'bin' \
+		-or -name 'obj' \
+		-or -name 'BenchmarkDotNet*' \
+		| xargs rm -rf
 
 .PHONY: benchmark
 benchmark:
