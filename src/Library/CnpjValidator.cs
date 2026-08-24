@@ -11,7 +11,6 @@ public interface ICnpjValidator
     CnpjValidationResult Validate(ReadOnlySpan<char> value);
     bool IsValid(string value);
     bool IsValid(ReadOnlySpan<char> value);
-
 }
 
 public class CnpjValidator : ICnpjValidator

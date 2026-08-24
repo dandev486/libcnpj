@@ -6,13 +6,14 @@ SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
 
 ## Features
 
-- **Flexible**, allows performing both `Alphanumeric` (newer rule, official) and `Relaxed Alphanumeric` (newer rule,
-    non-official) document validations, where the latter is provided as a convenience in order to avoid unnecessary
-    string allocations with case conversions prior to knowing if a document is even valid (aka.: when using this mode,
-    you can first validate and then, only if valid, convert the input string to uppercase).
-- **Retrocompatible**, allows performing `Numeric` document validations (older rule, official).
-- **Economy**, zero regex matching and zero string allocation during the validation process, just plain character
-    comparisons and digit calculations based on their respective weights.
+- **Flexibility**, allows performing both `Alphanumeric` (newer rule, official) and `Relaxed Alphanumeric` (newer rule,
+  non-official) document generation and validation, where the latter is provided as a convenience in order to avoid
+  unnecessary string allocations with case conversions prior to knowing if a document is even valid (aka.: when using
+  this mode, you can first validate and then, only if valid, convert the input string to uppercase).
+- **Retrocompatibility**, allows performing `Numeric` document generation and validation (older rule, official).
+- **Economy**, single string allocation during the generation process and zero regex matching and zero string allocation
+  during the validation process (just plain character comparisons and digit calculations based on their respective
+  weights).
 
 ## Getting Started
 
@@ -21,20 +22,31 @@ Below a suggestion on how to use this library for a project that uses dependency
 1. **Configure and Register**, using your favourite validation rule (or most often, the proper business rule).
 
 ```csharp
-// Example 1: When only alphanumeric validations are needed, registered once.
+// Example 1: When only alphanumeric generation or validation is needed, registered once.
 public static class MyServices
 {
     private static void AddMyServices(IServiceCollection services)
     {
+        // Register only what you'll use.
+        services.AddSingleton<ICnpjGenerator>(new CnpjGenerator(CnpjFormat.Alphanumeric));
         services.AddSingleton<ICnpjValidator>(new CnpjValidator(CnpjFormat.Alphanumeric));
     }
 }
 
-// Example 2: When both alphanumeric and numeric validations are needed, registered as different keyed services.
+// Example 2: When both alphanumeric and numeric generation or validation is needed, registered as different keyed services.
 public static class MyServices
 {
     private static void AddMyServices(IServiceCollection services)
     {
+        // Register only what you'll use.
+        services.AddKeyedSingleton<ICnpjGenerator>(
+            CnpjFormat.Alphanumeric,
+            new CnpjGenerator(CnpjFormat.Alphanumeric));
+
+        services.AddKeyedSingleton<ICnpjGenerator>(
+            CnpjFormat.Numeric,
+            new CnpjGenerator(CnpjFormat.Numeric));
+
         services.AddKeyedSingleton<ICnpjValidator>(
             CnpjFormat.Alphanumeric,
             new CnpjValidator(CnpjFormat.Alphanumeric));
@@ -49,11 +61,20 @@ public static class MyServices
 2. **Use**, injecting it where appropriate.
 
 ```csharp
-// Example 1: When only alphanumeric validations are needed, registered once.
+// Example 1: When only alphanumeric generation or validation is needed, registered once.
 public class MyClass(
+    // Inject only what you'll use.
+    ICnpjGenerator cnpjGenerator,
     ICnpjValidator cnpjValidator)
 {
-    public void MyMethod(string document)
+    public void MyGenerationMethod()
+    {
+        var document = cnpjGenerator.Generate();
+
+        // Wow! Such generated.
+    }
+
+    public void MyValidationMethod(string document)
     {
         if (!cnpjValidator.IsValid(document))
         {
@@ -64,12 +85,29 @@ public class MyClass(
     }
 }
 
-// Example 2: When both alphanumeric and numeric validations are needed, registered as different keyed services.
+// Example 2: When both alphanumeric and numeric generation or validation is needed, registered as different keyed services.
 public class MyClass(
+    // Inject only what you'll use.
+    [FromKeyedServices(CnpjFormat.Alphanumeric)] ICnpjGenerator alphanumericCnpjGenerator,
+    [FromKeyedServices(CnpjFormat.Numeric)] ICnpjGenerator numericCnpjGenerator,
     [FromKeyedServices(CnpjFormat.Alphanumeric)] ICnpjValidator alphanumericCnpjValidator,
     [FromKeyedServices(CnpjFormat.Numeric)] ICnpjValidator numericCnpjValidator))
 {
-    public void MyAlphanumericMethod(string document)
+    public void MyAlphanumericGenerationMethod()
+    {
+        var document = alphanumericCnpjGenerator.Generate();
+
+        // Wow! Such generated.
+    }
+
+    public void MyNumericGenerationMethod()
+    {
+        var document = numericCnpjGenerator.Generate();
+
+        // Wow! Such generated.
+    }
+
+    public void MyAlphanumericValidationMethod(string document)
     {
         if (!alphanumericCnpjValidator.IsValid(document))
         {
@@ -79,7 +117,7 @@ public class MyClass(
         // Wow! Much validated.
     }
 
-    public void MyNumericMethod(string document)
+    public void MyNumericValidationMethod(string document)
     {
         if (!numericCnpjValidator.IsValid(document))
         {
@@ -93,8 +131,32 @@ public class MyClass(
 
 ## Benchmark
 
-Below a sample execution of the implemented benchmarks in order to compare both the transliterated implementation and
-the one that is effectively published.
+### Generator
+
+Below a sample execution of the implemented benchmarks.
+
+```
+BenchmarkDotNet v0.15.8, Linux Debian GNU/Linux 13 (trixie)
+Intel Pentium Silver J5040 CPU 2.00GHz (Max: 3.00GHz), 1 CPU, 4 logical and 4 physical cores
+.NET SDK 10.0.302
+  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v2
+  DefaultJob : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v2
+
+
+| Method                              | Mean     | Error   | StdDev  | Gen0   | Allocated |
+|------------------------------------ |---------:|--------:|--------:|-------:|----------:|
+| AlphanumericRelaxedWithoutSeparator | 416.8 ns | 1.14 ns | 1.01 ns | 0.0267 |      56 B |
+| AlphanumericRelaxedWithSeparator    | 483.0 ns | 1.85 ns | 1.73 ns | 0.0305 |      64 B |
+| AlphanumericWithoutSeparator        | 374.3 ns | 1.74 ns | 1.62 ns | 0.0267 |      56 B |
+| AlphanumericWithSeparator           | 411.2 ns | 1.21 ns | 1.13 ns | 0.0305 |      64 B |
+| NumericWithoutSeparator             | 241.1 ns | 0.43 ns | 0.40 ns | 0.0267 |      56 B |
+| NumericWithSeparator                | 296.9 ns | 0.93 ns | 0.87 ns | 0.0305 |      64 B |
+```
+
+### Validator
+
+Below a sample execution of the implemented benchmarks in order to compare both the published implementation and the
+transliterated version used as a baseline.
 
 ```
 BenchmarkDotNet v0.15.8, Linux Debian GNU/Linux 13 (trixie)
