@@ -91,6 +91,40 @@ public class MyClass(
 }
 ```
 
+## Benchmark
+
+Below a sample execution of the implemented benchmarks in order to compare both the transliterated implementation and
+the one that is effectively published.
+
+```
+BenchmarkDotNet v0.15.8, Linux Debian GNU/Linux 13 (trixie)
+Intel Pentium Silver J5040 CPU 2.00GHz (Max: 3.00GHz), 1 CPU, 4 logical and 4 physical cores
+.NET SDK 10.0.302
+  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v2
+  DefaultJob : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v2
+
+| Method                                     | value              | Mean       | Error    | StdDev   | Gen0   | Allocated |
+|------------------------------------------- |------------------- |-----------:|---------:|---------:|-------:|----------:|
+| AlphanumericRelaxedWithoutSeparator        | 285hw5pl000112     |   145.7 ns |  0.23 ns |  0.20 ns |      - |         - |
+| AlphanumericRelaxedWithoutSeparator        | 285HW5PL000112     |   135.9 ns |  0.43 ns |  0.38 ns |      - |         - |
+| AlphanumericRelaxedWithoutSeparator        | 40416464000106     |   150.8 ns |  1.47 ns |  1.37 ns |      - |         - |
+| AlphanumericRelaxedWithSeparator           | 28.5hw.5pl/0001-12 |   195.2 ns |  2.13 ns |  2.00 ns |      - |         - |
+| AlphanumericRelaxedWithSeparator           | 28.5HW.5PL/0001-12 |   174.7 ns |  0.82 ns |  0.72 ns |      - |         - |
+| AlphanumericRelaxedWithSeparator           | 40.416.464/0001-06 |   193.5 ns |  2.36 ns |  2.09 ns |      - |         - |
+| AlphanumericWithoutSeparator               | 285HW5PL000112     |   131.1 ns |  0.19 ns |  0.18 ns |      - |         - |
+| AlphanumericWithoutSeparator               | 40416464000106     |   141.0 ns |  0.21 ns |  0.19 ns |      - |         - |
+| AlphanumericWithSeparator                  | 28.5HW.5PL/0001-12 |   176.2 ns |  0.66 ns |  0.62 ns |      - |         - |
+| AlphanumericWithSeparator                  | 40.416.464/0001-06 |   196.2 ns |  0.55 ns |  0.51 ns |      - |         - |
+| NumericWithoutSeparator                    | 40416464000106     |   128.0 ns |  0.52 ns |  0.48 ns |      - |         - |
+| NumericWithSeparator                       | 40.416.464/0001-06 |   171.8 ns |  0.30 ns |  0.27 ns |      - |         - |
+| TransliteratedAlphanumericWithoutSeparator | 285HW5PL000112     | 1,867.9 ns |  4.28 ns |  4.00 ns | 0.5035 |    1056 B |
+| TransliteratedAlphanumericWithoutSeparator | 40416464000106     | 1,883.9 ns |  5.69 ns |  5.05 ns | 0.5035 |    1056 B |
+| TransliteratedAlphanumericWithSeparator    | 28.5HW.5PL/0001-12 | 2,451.7 ns |  6.71 ns |  5.24 ns | 0.5302 |    1112 B |
+| TransliteratedAlphanumericWithSeparator    | 40.416.464/0001-06 | 2,477.5 ns | 18.97 ns | 17.74 ns | 0.5302 |    1112 B |
+| TransliteratedNumericWithoutSeparator      | 40416464000106     | 1,874.6 ns |  5.37 ns |  5.02 ns | 0.5035 |    1056 B |
+| TransliteratedNumericWithSeparator         | 40.416.464/0001-06 | 2,410.8 ns |  9.45 ns |  8.38 ns | 0.5302 |    1112 B |
+```
+
 ## Q&A
 
 Even though nobody asked (as of now), I strongly suggest that you don't even waste your time reading it.
