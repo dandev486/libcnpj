@@ -1,5 +1,5 @@
 ﻿/*
-LibCnpj, a simple library for validating Brazil's CNPJ.
+LibCnpj, a simple library for generating and validating Brazil's CNPJ.
 Copyright (C) 2026 Daniel Augusto
 SPDX-License-Identifier: LGPL-2.0-only or BSD-3-Clause (at your choice)
 */
@@ -12,12 +12,12 @@ namespace LibCnpj.Benchmark;
 [Orderer(SummaryOrderPolicy.Method)]
 public class CnpjValidatorBenchmark
 {
-    private readonly CnpjValidator _alphanumericWithSeparator = new(CnpjValidationFormat.Alphanumeric, true);
-    private readonly CnpjValidator _alphanumericRelaxedWithSeparator = new(CnpjValidationFormat.AlphanumericRelaxed, true);
-    private readonly CnpjValidator _numericWithSeparator = new(CnpjValidationFormat.Numeric, true);
-    private readonly CnpjValidator _alphanumericWithoutSeparator = new(CnpjValidationFormat.Alphanumeric, false);
-    private readonly CnpjValidator _alphanumericRelaxedWithoutSeparator = new(CnpjValidationFormat.AlphanumericRelaxed, false);
-    private readonly CnpjValidator _numericWithoutSeparator = new(CnpjValidationFormat.Numeric, false);
+    private readonly CnpjValidator _alphanumericWithSeparator = new(CnpjFormat.Alphanumeric, true);
+    private readonly CnpjValidator _alphanumericRelaxedWithSeparator = new(CnpjFormat.AlphanumericRelaxed, true);
+    private readonly CnpjValidator _numericWithSeparator = new(CnpjFormat.Numeric, true);
+    private readonly CnpjValidator _alphanumericWithoutSeparator = new(CnpjFormat.Alphanumeric, false);
+    private readonly CnpjValidator _alphanumericRelaxedWithoutSeparator = new(CnpjFormat.AlphanumericRelaxed, false);
+    private readonly CnpjValidator _numericWithoutSeparator = new(CnpjFormat.Numeric, false);
 
     [Benchmark]
     [Arguments("28.5HW.5PL/0001-12")]

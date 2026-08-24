@@ -12,7 +12,11 @@ pack:
 
 .PHONY: clean
 clean:
-	find . -name 'bin' -or -name 'obj' | xargs rm -rf
+	find . -type d \
+		-name 'bin' \
+		-or -name 'obj' \
+		-or -name 'BenchmarkDotNet*' \
+		| xargs rm -rf
 
 .PHONY: benchmark
 benchmark:
@@ -20,5 +24,11 @@ benchmark:
 
 .PHONY: license
 license:
-	find . -path './*/*' -not -path '*/.*' -not -path '*/doc*' -not -path '*/bin*' -not -path '*/obj*' -type f \
+	find . -type f \
+		-path './*/*' \
+		-not -path '*/.*' \
+		-not -path '*/doc*' \
+		-not -path '*/bin*' \
+		-not -path '*/obj*' \
+		-not -path '*/BenchmarkDotNet*' \
 		| xargs grep --files-without-match 'SPDX-License-Identifier'
